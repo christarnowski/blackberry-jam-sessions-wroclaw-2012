@@ -46,11 +46,13 @@ public class StartActivity extends Activity {
     private TextView responseView;
     private ListView list;
     private LazyAdapter adapter;
+    private TextView tvTotalCount;
 
     private static int idGenerator = 1;
 
     private Vector<ListItemData> productList = new Vector<ListItemData>();
 
+    private Integer totalCount = 0;
     // minimum size of picture to scale
     final int REQUIRED_SIZE = 400;
 
@@ -63,6 +65,8 @@ public class StartActivity extends Activity {
         setContentView(R.layout.activity_start);
         responseView = (TextView) findViewById(R.id.tvStatus);
         list = (ListView) findViewById(R.id.productList);
+        tvTotalCount = (TextView) findViewById(R.id.tvTotalCount);
+
         adapter = new LazyAdapter(this, productList);
         list.setAdapter(adapter);
     }
@@ -147,6 +151,19 @@ public class StartActivity extends Activity {
         }
     };
 
+    private void updateCount() {
+        totalCount = 0;
+        Iterator<ListItemData> iter = productList.iterator();
+        while (iter.hasNext()) {
+            ListItemData d = iter.next();
+            if (d.getPriceValue() != null) {
+                totalCount += d.getPriceValue();
+            }
+        }
+
+        tvTotalCount.setText(totalCount + ".00 PLN");
+    }
+
     private void updateListViewWithData(String data, int uniqueId) {
         String recognizedId = "Product not recognized";;
         try {
@@ -166,9 +183,10 @@ public class StartActivity extends Activity {
             if (d.getUniqueId() == uniqueId) {
                 d.splitIdData(recognizedId);
                 adapter.notifyDataSetChanged();
-                return;
+                break;
             }
         }
+        updateCount();
     }
 
     @Override

@@ -8,6 +8,7 @@ public class ListItemData {
     private Bitmap thumbnail;
     private String caption;
     private String price;
+    private Integer priceValue;
 
     /**
      * List item data generated based on the camera output
@@ -27,6 +28,7 @@ public class ListItemData {
             caption = tmp[0];
             if (tmp.length > 1) {
                 price = tmp[1] + ".00 PLN";
+                priceValue = Integer.valueOf(tmp[1]);
             }
         }
     }
@@ -89,5 +91,9 @@ public class ListItemData {
 
     public int getUniqueId() {
         return uniqueId;
+    }
+
+    public Integer getPriceValue() {
+        return priceValue;
     }
 }
