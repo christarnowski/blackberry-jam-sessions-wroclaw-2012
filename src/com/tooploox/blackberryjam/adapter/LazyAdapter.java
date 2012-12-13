@@ -1,36 +1,41 @@
 package com.tooploox.blackberryjam.adapter;
 
+import java.util.Vector;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tooploox.blackberryjam.R;
+import com.tooploox.blackberryjam.data.ListItemData;
 
-public class LazyAdapter extends BaseAdapter {
+public class LazyAdapter extends ArrayAdapter<ListItemData> {
 
     private Activity activity;
-    private String[] data;
+    private Vector<ListItemData> data;
     private static LayoutInflater inflater = null;
-    public ImageLoader imageLoader;
 
-    public LazyAdapter(Activity a, String[] d) {
+    // public ImageLoader imageLoader;
+
+    public LazyAdapter(Activity a, Vector<ListItemData> d) {
+        super(a, R.id.productList, R.id.text, d);
         activity = a;
         data = d;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        imageLoader = new ImageLoader(activity.getApplicationContext());
+        // imageLoader = new ImageLoader(activity.getApplicationContext());
     }
 
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
-    public Object getItem(int position) {
-        return position;
+    public ListItemData getItem(int position) {
+        return data.get(position);
     }
 
     public long getItemId(int position) {
@@ -43,8 +48,9 @@ public class LazyAdapter extends BaseAdapter {
 
         TextView text = (TextView) vi.findViewById(R.id.text);;
         ImageView image = (ImageView) vi.findViewById(R.id.image);
-        text.setText("item " + position);
-        imageLoader.DisplayImage(data[position], image);
+        text.setText(data.get(position).getCaption());
+        // TODO: add price tag display.
+        image.setImageBitmap(data.get(position).getImage());
         return vi;
     }
 }
