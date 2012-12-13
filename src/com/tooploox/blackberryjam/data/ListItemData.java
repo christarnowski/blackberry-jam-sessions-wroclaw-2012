@@ -26,7 +26,7 @@ public class ListItemData {
         if (tmp.length > 0) {
             caption = tmp[0];
             if (tmp.length > 1) {
-                price = tmp[1];
+                price = tmp[1] + ".00 PLN";
             }
         }
     }

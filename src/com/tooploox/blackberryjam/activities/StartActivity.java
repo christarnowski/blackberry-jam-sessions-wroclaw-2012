@@ -3,6 +3,9 @@ package com.tooploox.blackberryjam.activities;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import pl.itraff.TestApi.ItraffApi.ItraffApi;
 import pl.itraff.camera.TakePhoto;
 import pl.itraff.camera.utils.CameraConstants;
@@ -146,11 +149,23 @@ public class StartActivity extends Activity {
     };
 
     private void updateListViewWithData(String data, int uniqueId) {
+        String recognizedId = "Product not recognized";;
+        try {
+            JSONObject obj = new JSONObject(data);
+            Integer status = obj.getInt("status");
+            if (status == 0) {
+                recognizedId = obj.getString("id");
+            }
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         Iterator<ListItemData> iter = productList.iterator();
         while (iter.hasNext()) {
             ListItemData d = iter.next();
             if (d.getUniqueId() == uniqueId) {
-                d.setCaption(data);
+                d.splitIdData(recognizedId);
                 adapter.notifyDataSetChanged();
                 return;
             }
@@ -169,13 +184,14 @@ public class StartActivity extends Activity {
                     log("bundle != null");
 
                     byte[] pictureData = bundle.getByteArray("pictureData");
+                    byte[] thumbnailData = bundle.getByteArray("thumbnailData");
                     Bitmap image = null;
                     if (pictureData != null) {
                         log("pictureData != null");
                         try {
                             image =
                                     BitmapFactory.decodeByteArray(pictureData, 0,
-                                            pictureData.length);
+                                            thumbnailData.length);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
