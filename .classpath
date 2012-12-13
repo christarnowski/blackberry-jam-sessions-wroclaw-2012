@@ -4,8 +4,13 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="libs/itraffApi_v1.jar"/>
 	<classpathentry kind="lib" path="libs/zxing-core.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ItraffApi"/>
+	<classpathentry kind="lib" path="libs/androidannotations-api-2.7.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
