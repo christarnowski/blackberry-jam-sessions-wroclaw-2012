@@ -51,7 +51,7 @@ public class StartActivity extends Activity {
 
     @Override
     protected void onStop() {
-        // getValuesFromEdit();
+        //getValuesFromEdit();
         savePrefs();
         super.onStop();
     }

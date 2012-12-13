@@ -22,9 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name="com.tooploox.blackberryjam.pl.itraff.camera.TakePhoto"
-            android:label="@string/app_name">
+         <activity
+            android:name="pl.itraff.camera.TakePhoto"
+            android:noHistory="true"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
     </application>
 
