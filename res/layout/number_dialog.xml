@@ -2,13 +2,14 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|center_vertical"
     android:background="@android:color/black">
 
     <Button
         android:id="@+id/btnUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/box_plus"
+        android:background="@drawable/btn_plus"
         />
 
     <TextView
@@ -27,7 +28,7 @@
         android:id="@+id/btnDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/box_minus"
+        android:background="@drawable/btn_minus"
         />
 
 </LinearLayout>
