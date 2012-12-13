@@ -42,7 +42,7 @@
         <Button
             android:id="@+id/checkout"
             android:layout_width="120dp"
-            android:layout_height="31dp"
+            android:layout_height="42dp"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/addtocart"
@@ -56,7 +56,7 @@
         <Button
             android:id="@+id/addtocart"
             android:layout_width="120dp"
-            android:layout_height="32dp"
+            android:layout_height="42dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
@@ -80,10 +80,10 @@
 
     <Button
         android:id="@+id/btnClearList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="42dp"
         android:layout_gravity="center"
-        android:text="Clear list"
+        android:background="@drawable/btn_clearcart"
         android:visibility="gone"
         android:onClick="onClearListClicked" />
 
