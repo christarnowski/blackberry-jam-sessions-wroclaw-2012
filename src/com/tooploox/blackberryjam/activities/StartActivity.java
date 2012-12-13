@@ -14,7 +14,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -184,21 +183,13 @@ public class StartActivity extends Activity {
                     log("bundle != null");
 
                     byte[] pictureData = bundle.getByteArray("pictureData");
-                    byte[] thumbnailData = bundle.getByteArray("thumbnailData");
-                    Bitmap image = null;
+                    Bitmap thumbnailData = (Bitmap) bundle.getParcelable("thumbnailData");
                     if (pictureData != null) {
                         log("pictureData != null");
-                        try {
-                            image =
-                                    BitmapFactory.decodeByteArray(pictureData, 0,
-                                            thumbnailData.length);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        if (image != null) {
+                        if (thumbnailData != null) {
                             log("image != null");
 
-                            ListItemData items = new ListItemData(image, idGenerator++);
+                            ListItemData items = new ListItemData(thumbnailData, idGenerator++);
                             productList.add(items);
                             adapter.notifyDataSetChanged();
 

@@ -145,8 +145,8 @@ public class CameraController {
                             bundle.putString("pictureName", "jakiś napis");
 
                             Log.v("CAMERA", "saving bundle");
-                            byte[] thumbnailData = createThumbnail(source);
-                            bundle.putSerializable("thumbnailData", thumbnailData);
+                            Bitmap thumbnailData = createThumbnail(source);
+                            bundle.putParcelable("thumbnailData", thumbnailData);
                             intent.putExtra("data", bundle);
                             success = true;
                         } catch (Exception e) {
@@ -179,16 +179,17 @@ public class CameraController {
      * @param source luminance source object
      * @return byte array containing picture data
      */
-    private byte[] createThumbnail(PlanarYUVLuminanceSource source) {
+    private Bitmap createThumbnail(PlanarYUVLuminanceSource source) {
         int[] rgbValues = new int[source.getDataWidth() * source.getDataHeight()];
         source.decodeYUV420SP(rgbValues);
         Bitmap thumbNail =
                 Bitmap.createBitmap(rgbValues, source.getDataWidth(), source.getDataHeight(),
                         Config.ARGB_8888);
         thumbNail = CameraUtils.rotateAndScaleBitmap(thumbNail, 90.0f, 200, 150);
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        thumbNail.compress(CompressFormat.JPEG, 60, os);
-        return os.toByteArray();
+        return thumbNail;
+        // ByteArrayOutputStream os = new ByteArrayOutputStream();
+        // thumbNail.compress(CompressFormat.JPEG, 60, os);
+        // return os.toByteArray();
     }
 
     /**
