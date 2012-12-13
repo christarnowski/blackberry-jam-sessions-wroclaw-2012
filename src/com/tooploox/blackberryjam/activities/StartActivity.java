@@ -73,40 +73,41 @@ public class StartActivity extends Activity {
             builder.setTitle("Number of items");
             LayoutInflater inflater = StartActivity.this.getLayoutInflater();
             View v = inflater.inflate(R.layout.number_dialog, null);
+            builder.setView(v);
             Button up = (Button) v.findViewById(R.id.btnUp);
             Button down = (Button) v.findViewById(R.id.btnDown);
-            TextView tvNoItems = (TextView) v.findViewById(R.id.tvNoItems);
+            final TextView tvNoItems = (TextView) v.findViewById(R.id.tvNumberOfItems);
             tvNoItems.setText(String.valueOf(data.getNoItems()));
 
             up.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView tvNoItems = (TextView) v.findViewById(R.id.tvNoItems);
                     String s = tvNoItems.getText().toString();
                     Integer i = Integer.valueOf(s);
                     i++;
                     tvNoItems.setText(String.valueOf(i));
                     data.setNoItems(i);
                     StartActivity.this.adapter.notifyDataSetChanged();
+                    StartActivity.this.updateCount();
                 }
             });
 
             down.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView tvNoItems = (TextView) v.findViewById(R.id.tvNoItems);
                     String s = tvNoItems.getText().toString();
                     Integer i = Integer.valueOf(s);
                     i--;
-                    if (i > 1) {
+                    if (i > 0) {
                         tvNoItems.setText(String.valueOf(i));
                         data.setNoItems(i);
                         StartActivity.this.adapter.notifyDataSetChanged();
+                        StartActivity.this.updateCount();
                     }
                 }
             });
 
-            builder.setView(v);
+
             builder.setPositiveButton("DONE", new OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
