@@ -7,6 +7,7 @@ import pl.itraff.camera.camera.CameraZoomChangedListener;
 import pl.itraff.camera.camera.PhotoFrameView;
 import pl.itraff.camera.utils.CameraConstants;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -65,6 +66,8 @@ public class TakePhoto extends Activity {
      * zoom scroll bar
      */
     private SeekBar zoomer;
+    
+    private ProgressDialog waitDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,6 +126,10 @@ public class TakePhoto extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        
+        if (waitDialog.isShowing()) {
+        	waitDialog.dismiss();
+        }
         // stopping the tracker
         // if (CameraConstants.ANALYTICS_ON) {
         // tracker.stopSession();
@@ -269,5 +276,27 @@ public class TakePhoto extends Activity {
         Log.v("CAMERA", "result take photo ok finish");
         finish();
 
+    }
+    
+    public void showWaitDialog() {
+        if (waitDialog != null) {
+            if (!waitDialog.isShowing()) {
+                waitDialog.show();
+            }
+        } else {
+            waitDialog = new ProgressDialog(this);
+            waitDialog.setMessage(getResources().getString(R.string.wait_message));
+            waitDialog.show();
+        }
+    }
+
+    public void dismissWaitDialog() {
+        try {
+            if (waitDialog != null && waitDialog.isShowing()) {
+                waitDialog.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

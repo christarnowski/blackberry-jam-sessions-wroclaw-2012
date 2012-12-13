@@ -45,7 +45,7 @@
             android:layout_height="31dp"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/button1"
+            android:layout_toRightOf="@+id/addtocart"
             android:onClick="onCheckoutClicked"
             android:background="@drawable/btn_checkout" />
             <!--  android:text="Checkout"
@@ -54,7 +54,7 @@
             android:textStyle="bold" /> -->
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/addtocart"
             android:layout_width="120dp"
             android:layout_height="32dp"
             android:layout_alignParentLeft="true"

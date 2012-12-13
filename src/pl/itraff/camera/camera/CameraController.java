@@ -401,6 +401,8 @@ public class CameraController {
         // redrawing frame on preview to indicate that picture is being
         // processed
         ((TakePhoto) context).redrawFrame(Color.RED, 200);
+        ((TakePhoto) context).showWaitDialog();
+        
         camera.autoFocus(mAutoFocusCallback);
     }
 
