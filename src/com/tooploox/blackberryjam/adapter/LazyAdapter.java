@@ -48,9 +48,15 @@ public class LazyAdapter extends ArrayAdapter<ListItemData> {
 
         TextView text = (TextView) vi.findViewById(R.id.text);;
         TextView price = (TextView) vi.findViewById(R.id.price);
+        TextView noItems = (TextView) vi.findViewById(R.id.tvNoItems);
+        TextView prdValue = (TextView) vi.findViewById(R.id.tvProductValue);
         ImageView image = (ImageView) vi.findViewById(R.id.image);
+
+
         text.setText(data.get(position).getCaption());
         price.setText(data.get(position).getPrice());
+        noItems.setText(String.valueOf(data.get(position).getNoItems()));
+        prdValue.setText(data.get(position).getProductValue() + ".00 PLN");
         // TODO: add price tag display.
         image.setImageBitmap(data.get(position).getImage());
         return vi;

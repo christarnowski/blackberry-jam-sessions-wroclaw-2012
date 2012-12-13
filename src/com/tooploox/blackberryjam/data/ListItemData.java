@@ -9,6 +9,7 @@ public class ListItemData {
     private String caption;
     private String price;
     private Integer priceValue;
+    private Integer noItems = 1;
 
     /**
      * List item data generated based on the camera output
@@ -95,5 +96,29 @@ public class ListItemData {
 
     public Integer getPriceValue() {
         return priceValue;
+    }
+
+    /**
+     * @return the noItems
+     */
+    public Integer getNoItems() {
+        return noItems;
+    }
+
+    /**
+     * @param noItems the noItems to set
+     */
+    public void setNoItems(Integer noItems) {
+        this.noItems = noItems;
+    }
+
+    /**
+     * @return multiplied no. of items times item price.
+     */
+    public Integer getProductValue() {
+        if (noItems != null && priceValue != null) {
+            return noItems * priceValue;
+        }
+        return 0;
     }
 }
