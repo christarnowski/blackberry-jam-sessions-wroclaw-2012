@@ -93,7 +93,27 @@ public class StartActivity extends Activity {
     }
 
     public void onCheckoutClicked(View v) {
-        Toast.makeText(this, "Send order to shop!", Toast.LENGTH_LONG).show();
+       
+ 
+    	final ProgressDialog progressDialog = ProgressDialog.show(StartActivity.this, "", "Sending your order");
+
+    	new Thread() {	
+    		public void run() {
+    			try{
+    					sleep(2000);
+    			} catch (Exception e) {
+    					Log.e("tag", e.getMessage());
+    			}
+    			// dismiss the progress dialog
+    			progressDialog.dismiss();
+    		}
+    	}.start();
+
+ 
+    	
+    	//Toast.makeText(this, "Send order to shop!", Toast.LENGTH_LONG).show();
+    
+    
     }
 
     // private void getValuesFromEdit() {
