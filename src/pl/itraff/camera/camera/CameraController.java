@@ -434,6 +434,7 @@ public class CameraController {
         params.set("jpeg-quality", "100");
         params.setPictureFormat(PixelFormat.JPEG);
         params.setPreviewSize(cameraResolution.x, cameraResolution.y);
+        params.setPictureSize(800, 600);
 
         // TODO: remove or add settings?:
         if (CameraConstants.USE_CAMERA_AUTO_FLASH) params.setFlashMode(Parameters.FLASH_MODE_AUTO);
