@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class StartActivity extends Activity {
     private ListView list;
     private LazyAdapter adapter;
     private TextView tvTotalCount;
+    private Button btnClearList;
 
     private static int idGenerator = 1;
 
@@ -74,6 +76,7 @@ public class StartActivity extends Activity {
         responseView = (TextView) findViewById(R.id.tvStatus);
         list = (ListView) findViewById(R.id.productList);
         tvTotalCount = (TextView) findViewById(R.id.tvTotalCount);
+        btnClearList = (Button) findViewById(R.id.btnClearList);
 
         adapter = new LazyAdapter(this, productList);
         list.setAdapter(adapter);
@@ -274,6 +277,10 @@ public class StartActivity extends Activity {
         if (debug) {
             Log.v(TAG, msg);
         }
+    }
+
+    protected void onClearListClicked(View v) {
+
     }
 
 }
