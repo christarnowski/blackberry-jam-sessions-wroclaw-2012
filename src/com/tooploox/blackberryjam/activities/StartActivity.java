@@ -10,7 +10,9 @@ import pl.itraff.TestApi.ItraffApi.ItraffApi;
 import pl.itraff.camera.TakePhoto;
 import pl.itraff.camera.utils.CameraConstants;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -177,30 +179,55 @@ public class StartActivity extends Activity {
     }
 
     private void updateListViewWithData(String data, int uniqueId) {
-        String recognizedId = "Product not recognized";;
+        String recognizedId = "Product not recognized";
+        boolean itemRecognized = false;
         try {
             if (data != null) {
                 JSONObject obj = new JSONObject(data);
                 Integer status = obj.getInt("status");
                 if (status == 0) {
                     recognizedId = obj.getString("id");
+                    itemRecognized = true;
                 }
             }
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         Iterator<ListItemData> iter = productList.iterator();
         while (iter.hasNext()) {
             ListItemData d = iter.next();
             if (d.getUniqueId() == uniqueId) {
-                d.splitIdData(recognizedId);
-                adapter.notifyDataSetChanged();
-                break;
+                if (itemRecognized) {
+                    d.splitIdData(recognizedId);
+                    adapter.notifyDataSetChanged();
+                    break;
+                } else {
+                    productList.remove(d);
+                    adapter.notifyDataSetChanged();
+                    showUnrecognizedDialog();
+                    break;
+                }
             }
         }
         updateCount();
+        if (productList.size() > 0) {
+            btnClearList.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showUnrecognizedDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Sorry, product was not recognized.\nProbably server is on fire ;-)");
+        builder.setTitle("Product not recognized");
+        builder.setPositiveButton(R.string.txt_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
@@ -223,7 +250,7 @@ public class StartActivity extends Activity {
 
                             ListItemData items = new ListItemData(thumbnailData, idGenerator++);
                             productList.add(items);
-                            adapter.notifyDataSetChanged();
+                            // adapter.notifyDataSetChanged();
 
                             // chceck internet connection
                             if (ItraffApi.isOnline(getApplicationContext())) {
@@ -279,8 +306,14 @@ public class StartActivity extends Activity {
         }
     }
 
-    protected void onClearListClicked(View v) {
-
+    public void onClearListClicked(View v) {
+        if (productList.size() > 0) {
+            productList.clear();
+            adapter.notifyDataSetChanged();
+        }
+        this.totalCount = 0;
+        this.tvTotalCount.setText("0.00 PLN");
+        btnClearList.setVisibility(View.GONE);
     }
 
 }

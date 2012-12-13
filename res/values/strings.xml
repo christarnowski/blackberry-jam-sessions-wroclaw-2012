@@ -14,4 +14,5 @@
     <string name="response">Server Response:</string>
     <string name="wait_message">Please wait…</string>
     <string name="not_connected">No internet connection!</string>
+    <string name="txt_ok">OK</string>
 </resources>
