@@ -167,10 +167,12 @@ public class StartActivity extends Activity {
     private void updateListViewWithData(String data, int uniqueId) {
         String recognizedId = "Product not recognized";;
         try {
-            JSONObject obj = new JSONObject(data);
-            Integer status = obj.getInt("status");
-            if (status == 0) {
-                recognizedId = obj.getString("id");
+            if (data != null) {
+                JSONObject obj = new JSONObject(data);
+                Integer status = obj.getInt("status");
+                if (status == 0) {
+                    recognizedId = obj.getString("id");
+                }
             }
         } catch (JSONException e) {
             // TODO Auto-generated catch block
