@@ -12,5 +12,5 @@ public class CameraConstants {
 
 	public static String CATEGORY_TYPE = "category_type";
 	public static final int PHOTO_QUALITY = 60;
-	public static final boolean USE_CAMERA_AUTO_FLASH = true;
+	public static final boolean USE_CAMERA_AUTO_FLASH = false;
 }
