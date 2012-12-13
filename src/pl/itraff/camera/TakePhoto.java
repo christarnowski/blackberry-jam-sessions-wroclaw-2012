@@ -29,7 +29,6 @@ import com.tooploox.blackberryjam.R;
  * @author qba
  * 
  */
-@SuppressWarnings("deprecation")
 public class TakePhoto extends Activity {
 
     private final String TAG = "CAMERA";
