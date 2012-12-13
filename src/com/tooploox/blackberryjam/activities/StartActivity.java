@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -66,8 +68,53 @@ public class StartActivity extends Activity {
 
     OnItemClickListener listItemListener = new OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            ListItemData data = productList.get(position);
-            Toast.makeText(StartActivity.this, data.getCaption(), Toast.LENGTH_LONG).show();
+            final ListItemData data = productList.get(position);
+            AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.this);
+            builder.setTitle("Number of items");
+            LayoutInflater inflater = StartActivity.this.getLayoutInflater();
+            View v = inflater.inflate(R.layout.number_dialog, null);
+            Button up = (Button) v.findViewById(R.id.btnUp);
+            Button down = (Button) v.findViewById(R.id.btnDown);
+            TextView tvNoItems = (TextView) v.findViewById(R.id.tvNoItems);
+            tvNoItems.setText(String.valueOf(data.getNoItems()));
+
+            up.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView tvNoItems = (TextView) v.findViewById(R.id.tvNoItems);
+                    String s = tvNoItems.getText().toString();
+                    Integer i = Integer.valueOf(s);
+                    i++;
+                    tvNoItems.setText(String.valueOf(i));
+                    data.setNoItems(i);
+                    StartActivity.this.adapter.notifyDataSetChanged();
+                }
+            });
+
+            down.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView tvNoItems = (TextView) v.findViewById(R.id.tvNoItems);
+                    String s = tvNoItems.getText().toString();
+                    Integer i = Integer.valueOf(s);
+                    i--;
+                    if (i > 1) {
+                        tvNoItems.setText(String.valueOf(i));
+                        data.setNoItems(i);
+                        StartActivity.this.adapter.notifyDataSetChanged();
+                    }
+                }
+            });
+
+            builder.setView(v);
+            builder.setPositiveButton("DONE", new OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                };
+            });
+            builder.create().show();
+
+            // Toast.makeText(StartActivity.this, data.getCaption(), Toast.LENGTH_LONG).show();
         };
     };
 
@@ -93,27 +140,28 @@ public class StartActivity extends Activity {
     }
 
     public void onCheckoutClicked(View v) {
-       
- 
-    	final ProgressDialog progressDialog = ProgressDialog.show(StartActivity.this, "", "Sending your order");
 
-    	new Thread() {	
-    		public void run() {
-    			try{
-    					sleep(2000);
-    			} catch (Exception e) {
-    					Log.e("tag", e.getMessage());
-    			}
-    			// dismiss the progress dialog
-    			progressDialog.dismiss();
-    		}
-    	}.start();
 
- 
-    	
-    	//Toast.makeText(this, "Send order to shop!", Toast.LENGTH_LONG).show();
-    
-    
+        final ProgressDialog progressDialog =
+                ProgressDialog.show(StartActivity.this, "", "Sending your order");
+
+        new Thread() {
+            public void run() {
+                try {
+                    sleep(2000);
+                } catch (Exception e) {
+                    Log.e("tag", e.getMessage());
+                }
+                // dismiss the progress dialog
+                progressDialog.dismiss();
+            }
+        }.start();
+
+
+
+        // Toast.makeText(this, "Send order to shop!", Toast.LENGTH_LONG).show();
+
+
     }
 
     // private void getValuesFromEdit() {
