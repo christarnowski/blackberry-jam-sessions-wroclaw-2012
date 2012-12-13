@@ -191,7 +191,7 @@ public class StartActivity extends Activity {
         while (iter.hasNext()) {
             ListItemData d = iter.next();
             if (d.getPriceValue() != null) {
-                totalCount += d.getPriceValue();
+                totalCount += d.getProductValue();
             }
         }
 
